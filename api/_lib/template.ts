@@ -57,6 +57,11 @@ function getCss(theme: string, fontSize: string) {
         text-align: center;
         align-items: center;
         justify-content: center;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     code {
@@ -89,7 +94,7 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .spacer {
-        margin: 150px;
+        margin: 100px;
     }
 
     .emoji {
@@ -105,7 +110,23 @@ function getCss(theme: string, fontSize: string) {
         font-style: normal;
         color: ${foreground};
         line-height: 1.8;
-    }`
+    }
+
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: url(https://image.tmdb.org/t/p/original/5P8SmMzSNYikXpxil6BYzJ16611.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      opacity: 0.5;
+      z-index: -1;
+    }
+    `
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
@@ -119,22 +140,25 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss(theme, fontSize)}
     </style>
     <body>
-        <div>
-            <div class="spacer">
-            <div class="logo-wrapper">
-                ${images
-                  .map(
-                    (img, i) =>
-                      getPlusSign(i) + getImage(img, widths[i], heights[i])
-                  )
-                  .join('')}
-            </div>
-            <div class="spacer">
-            <div class="heading">${emojify(
-              md ? marked(text) : sanitizeHtml(text)
-            )}
-            </div>
+      <div>
+        <div class="spacer">
+          <div class="logo-wrapper">
+              ${images
+                .map(
+                  (img, i) =>
+                    getPlusSign(i) + getImage(img, widths[i], heights[i])
+                )
+                .join('')}
+          </div>
         </div>
+        <div class="spacer">
+          <div class="heading">${emojify(
+            md ? marked(text) : sanitizeHtml(text)
+          )}
+          </div>
+        </div>
+      </div>
+      <div class='bg-image'></div>
     </body>
 </html>`
 }
