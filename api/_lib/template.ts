@@ -100,6 +100,11 @@ function getCss(theme: string, fontSize: string, bg?: string) {
         margin: 100px;
     }
 
+    .spacer-lower {
+      margin: 100px;
+      margin-top: 50px;
+    }
+
     .emoji {
         height: 1em;
         width: 1em;
@@ -112,7 +117,6 @@ function getCss(theme: string, fontSize: string, bg?: string) {
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
-        line-height: 1.8;
     }
 
     .bg-image {
@@ -155,7 +159,7 @@ export function getHtml(parsedReq: ParsedRequest) {
                 .join('')}
           </div>
         </div>
-        <div class="spacer">
+        <div class="spacer-lower">
           <div class="heading">${emojify(
             md ? marked(text) : sanitizeHtml(text)
           )}
