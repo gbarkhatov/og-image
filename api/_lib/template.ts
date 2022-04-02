@@ -16,7 +16,7 @@ const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString(
   'base64'
 )
 
-function getCss(theme: string, fontSize: string) {
+function getCss(theme: string, fontSize: string, bg?: string) {
   let background = 'white'
   let foreground = 'black'
   let radial = 'lightgray'
@@ -50,7 +50,10 @@ function getCss(theme: string, fontSize: string) {
 
     body {
         background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
+        ${
+          !bg &&
+          `background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);`
+        }
         background-size: 100px 100px;
         height: 100vh;
         display: flex;
@@ -118,7 +121,7 @@ function getCss(theme: string, fontSize: string) {
       left: 0;
       bottom: 0;
       right: 0;
-      background: url(https://image.tmdb.org/t/p/original/5P8SmMzSNYikXpxil6BYzJ16611.jpg) no-repeat center center fixed;
+      background: url(${bg}) no-repeat center center fixed;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -130,14 +133,15 @@ function getCss(theme: string, fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-  const { text, theme, md, fontSize, images, widths, heights } = parsedReq
+  const { text, theme, md, fontSize, images, widths, heights, bg } = parsedReq
+
   return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        ${getCss(theme, fontSize)}
+        ${getCss(theme, fontSize, bg)}
     </style>
     <body>
       <div>
